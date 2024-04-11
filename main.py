@@ -6,7 +6,6 @@ import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-test
 
 # Chemin pour enregistrer les fichiers temporaires
 UPLOAD_FOLDER = 'temp_images'
@@ -16,7 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Charger le modèle
-model = tf.keras.models.load_model('modele_couverture_livre.h5')
+model = tf.keras.models.load_model('modele_couverture_livre.tflite')
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
