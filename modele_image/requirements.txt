@@ -3,3 +3,4 @@ redis
 numpy
 tensorflow
 Pillow
+requests
