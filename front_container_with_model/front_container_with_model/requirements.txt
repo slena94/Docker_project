@@ -1,0 +1,7 @@
+flask
+tensorflow
+numpy
+os
+werkzeug.utils
+requests
+Pillow
