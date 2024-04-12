@@ -14,6 +14,8 @@ services:
 
   model:
     build: ./modele_image
+    depend_on:
+      - front
     ports:
       - "5001:5001"
     networks:
