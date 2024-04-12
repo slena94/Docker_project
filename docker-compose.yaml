@@ -1,0 +1,26 @@
+version: '3.9'
+
+networks:
+  app-network:
+    driver: bridge
+
+
+services:
+  front:
+    build: ./front_container_with_model/front_container_with_model
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./front_container_with_model/front_container_with_model:/app
+    networks:
+      - app-network
+    
+
+  model:
+    build: ./modele_image
+    ports: 
+      - "5001:5001"
+    networks:
+      - app-network
+
+
