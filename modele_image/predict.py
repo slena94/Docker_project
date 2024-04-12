@@ -3,6 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import logging
+from io import BytesIO
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -18,7 +19,12 @@ def predict():
     file = request.files.get('file')
     if file:
         try:
-            img = image.load_img(file.stream, target_size=(128, 128))
+            # Convertir le fichier SpooledTemporaryFile en BytesIO
+            in_memory_file = BytesIO()
+            file.save(in_memory_file)
+            in_memory_file.seek(0)
+
+            img = image.load_img(in_memory_file, target_size=(128, 128))
             img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0)
             img_array = img_array.astype('float32')
@@ -34,3 +40,6 @@ def predict():
             logging.error(f"Error during prediction: {str(e)}", exc_info=True)
             return jsonify({'error': str(e)}), 500
     return jsonify({'error': 'No file provided'}), 400
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001, debug=True)
